@@ -1,0 +1,63 @@
+73bbf5ea9906d1828bf475452550f633d5340bc7
+Specify initial event for linear and exponential ramp, when there are no events preceding this event
+This inserts a SetValueAtTime event with the current AudioParam value at time of the call to the linear or exponential ramp.
+
+3ed6f405e3c2b0c34f0fb78f0ab6ce2685b854f9
+Implement AudioParam cartesian coordinates for PannerNode
+This will allow performing smooth off-main-thread scheduling of listener and source position.
+
+a6842f2f733911a8ac6b330a405eac19878adc15
+Implement the new filter equations
+The difference in output is minimal as for not breaking applications, but the new equations (derived from the Audio EQ Cookbook) can represent more filters.
+
+6568f96d6ed019748640a7daec3d6e573b472ed5
+Make the AudioDestinationNode have an output
+This allow, for example, to easily connect a whole graph to a MediaRecorder or a PeerConnection without changing the graph too much.
+
+c5d57859d6f17322210c850b507840114a8dc9f6
+Add a `length` attribute to the OfflineAudioContext
+This has the same value as the parameter passed to the construtor.
+
+018776627d6ae7ef652dd855214d0f220895cd76
+Add `min` and `max` attribute to `AudioParams`
+This allows introspecting the AudioParam to know the valid range.
+
+18483676b8a56972f3aa3b1195df61233bfe1811
+Replace 0.7071 with sqrt(0.5) in downmixing equations
+That was probably what was intended, and is more precise.
+
+6a697fb3d984571c3e0b2406433310d00ff8510c
+Use unsigned long for AudioBuffer length and numberOfChannels
+This is in line with other length and numberOfChannels of the spec.
+
+b6acfabccbd60f704c4e98101ddfef39eb987acf
+Perform linear interpolation when computing the SetValueCurveAtTime events
+We used to just sample the curve, but the working group has agreed on linear interpolation.
+
+https://webaudio.github.io/web-audio-api/#dictionary-audiocontextoptions-members
+Implement AudiContextOptions parameter, and playbackCategory
+This allow specifying options when constructing a new `AudioContext`. `playbackCategory` allows having a different latency than the default (which is the lowest latency possible).
+
+1874c4395503a6b286bfc09fb91a6f1961896ca0
+Support chaining AudioParam automation methods
+This simply returns the AudioParam so that a chaining style can be used.
+
+e47307415e28d590f642d9d8babf4d4a5af42e46
+Rework AudioContext.currentTime
+It should be updated more frequently, at the end of each processed block and not each audio callback.
+
+a04cdabe1e98f054137e9ec58141e1c479d446ae
+Use a dictionary to specify how PeriodicWave should be normalized (or not)
+It's now normalized on creation only, if normalization is enabled, and uses a dictionary.
+
+30f652557a7e9a139937c17f8519eaa333bc6478
+Add suspend() and resume() for OfflineAudioContext
+This allows deterministically mutating an OfflineAudioContext graph.
+
+7c37dca1b4840e2c4e7d245bafcbf235e5d20e0f
+Make BiquadFilterNode AudioParam be a-rate
+This is useful for AM and FM use-cases.
+
+3b452b1de953fbee41a7e30657e21dfb7b7110ff
+Implement IIRFilterNode
+This adds a new IIRFilterNode that implements a general IIR filter.
