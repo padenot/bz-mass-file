@@ -14,11 +14,11 @@ likely you need to change the code a bit.
 <Summary>\n
 <Description>\n
 \n
-Git commit of a spec change\n
-Summary\n
-Description\n
+<Git commit of a spec change>\n
+<Summary>\n
+<Description>\n
 \n
-Git commit of a spec change\n
-Summary\n
-Description\n
+<Git commit of a spec change>\n
+<Summary>\n
+<Description>\n
 ```
