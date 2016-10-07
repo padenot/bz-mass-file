@@ -6,8 +6,11 @@ import requests
 
 INSTANCE='https://bugzilla.mozilla.org/'
 
+def trim(string):
+    return string[0:-1]
+
 def open_bugs(bugs):
-    key = trim(file.open("key.txt").readlines()[0])
+    key = trim(open("key.txt").readlines()[0])
     params = {
       "api_key": key,
       "product" : "Core",
@@ -15,7 +18,8 @@ def open_bugs(bugs):
       "summary" : "",
       "description": "",
       "status": "NEW",
-      "version": "Trunk"
+      "version": "Trunk",
+      "priority": ""
     }
 
     def format(description, link):
@@ -25,6 +29,7 @@ def open_bugs(bugs):
         description_with_link = format(bug["description"], bug["link"])
         params["summary"] = bug["summary"]
         params["description"] = description_with_link
+        params["priority"] = bug["priority"]
         r = requests.post(INSTANCE + '/rest/bug', params=params)
         print(r.text)
 
@@ -38,9 +43,10 @@ def parse(file_name):
         else:
             return "https://github.com/webaudio/web-audio-api/commit/" + string
 
-    def trim(string):
-        return string[0:-1]
-
+    def validate_prio(string):
+        if string[0] is not "P" or string[1] not in ["1", "2", "3", "4", "5"]:
+            raise SyntaxError("Priority can be P1 to P5, is " + string)
+        return string
 
     i = 0
     while i < len(lines):
@@ -50,6 +56,8 @@ def parse(file_name):
         d["summary"] = trim(lines[i])
         i = i+1
         d["description"] = trim(lines[i])
+        i = i+1
+        d["priority"] = validate_prio(trim(lines[i]))
         i = i+1
         if len(lines) != i and lines[i] != "\n":
             print("formatting error at line " + str(i))
